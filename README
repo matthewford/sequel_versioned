@@ -1,0 +1,7 @@
+rake install
+
+in merb, before the app loads
+dependency "sequel_versioned", "0.0.1" 
+
+
+TODO:fix spec
