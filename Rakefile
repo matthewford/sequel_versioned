@@ -16,7 +16,7 @@ Homepage   = "http://sequel.rubyforge.org"
 require "rake"
 require "rake/clean"
 require "rake/gempackagetask"
-require "rake/rdoctask"
+require 'hanna/rdoctask' #use hanna
 require "fileutils"
 
 include FileUtils

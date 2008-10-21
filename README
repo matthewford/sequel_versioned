@@ -1,7 +1,29 @@
+= Install
 rake install
 
-in merb, before the app loads
-dependency "sequel_versioned", "0.0.1" 
+= Merb
+
+In the before the app loads block add:
+
+	dependency "sequel_versioned", "0.0.1" 
+
+= Sequel Plugin
+
+== Schema
+
+The fact table needs for a versioned object both object_id and object_version attributes, the versioned object must have a fact_id.
+For a versioned collection the fact table needs collection_version, and the collection objects must have a fact_id. 
 
 
-TODO:fix spec
+== Model
+
+The fact table needs to have a many_to_one association with each versioned object or collection.
+
+To load the plugin in your Fact model
+	
+	is(:versioned_fact, {:collections => [Collection], :dimensions => [Dimension]})  
+  
+
+Then in your versioned models versioned_object versioned_collection depending on what you need.
+
+The method `version!` is available on the fact model, along with current_dimension and current_collection.
