@@ -24,7 +24,7 @@ module Sequel
         def version_for(object)
           old_objs = self.current_for(object).all
           unless old_objs.empty?
-          old_version_sym = "#{self.name.plural.underscore}_version".to_sym
+          old_version_sym = "#{self.name.pluralize.underscore}_version".to_sym
           old_version = object.send(old_version_sym)
 
             old_objs.each do |o|

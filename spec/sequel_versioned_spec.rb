@@ -1,66 +1,41 @@
 require File.join(File.dirname(__FILE__), "spec_helper")
 
-DB = Sequel.sqlite
+describe "Sequel Verioned Plugin" do
 
-class Fact < Sequel::Model(:items)
-  set_schema do
-    primary_key :id
-    varchar :name
-    forign_key :dimension_id, Dimension
-    integer :dimension_version
-    integer :collections_version
+  before(:all) do
+    @fact = Fact.create
   end
 
-  is(:versioned_fact, {:collections => [Collection], :dimensions => [Dimension]})
-  
-  one_to_many :collections
-  one_to_many :dimensions
-end
- 
-class Dimension < Sequel::Model(:items)
-  set_schema do
-    primary_key :id
-    integer     :version, :default => 0
-    forign_key :fact_id, Fact
+  it "should have a dimension created" do
+    @fact.current_dimension.should_not be_nil
   end
 
-  is :versioned_object
-  many_to_one :fact
-end
-
-class Collection < Sequel::Model(:items)
-  set_schema do
-    primary_key :id
-    integer     :version, :default => 0
-    forign_key :fact_id, Fact
-  end
-
-  is :versioned_collection
-  
-  many_to_one :fact
-end
-
-
-
-
-describe Sequel::Plugins::Versioned, "current_object(s)" do
-
-  before(:each) do
-    Fact.create_table!
-    Collection.create_table!
-    Dimension.create_table!
+  it "should store collection objects" do
+    2.times do
+      @c = Collection.create
+      @fact.add_collection(@c)
+    end
+    @fact.current_collections.include?(@c).should == true
   end
   
-  it "should have a dimention created" do
-    f = Fact.create
-    f.current_dimention.should_not be_nil
+  it "should version dimension" do
+    old_version_dimension = @fact.current_dimension
+    @fact.version!
+    @fact.current_dimension.version.should == old_version_dimension.version + 1
   end
-
-  it "store collection objects" do
-    f = Fact.create
-    c = Collection.create
-    r.add_collection()
-    r.current_collections.include?(c).should == true
+  
+  it "should fetch an arbitary version" do
+    @fact.fetch_version = 0
+    @fact.current_dimension.version.should == 0
+    @fact.current_collections.first.version.should == 0
+    @fact.fetch_version = nil
+  end
+  
+  it "should version collections" do
+    old_version_collections = @fact.current_collections
+    @fact.version!
+    @fact.current_collections.first.version.should == old_version_collections.first.version + 1
+    @fact.current_collections.size.should == old_version_collections.size
   end
   
 end
