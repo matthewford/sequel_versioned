@@ -24,6 +24,6 @@ To load the plugin in your Fact model
 	is(:versioned_fact, {:collections => [Collection], :dimensions => [Dimension]})  
   
 
-Then in your versioned models versioned_object versioned_collection depending on what you need.
+Then in your versioned models is :versioned_object or is :versioned_collection depending on what you need.
 
 The method `version!` is available on the fact model, along with current_dimension and current_collection.
