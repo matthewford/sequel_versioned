@@ -27,7 +27,7 @@ To load the plugin in your Fact model
 
 Then in your versioned models <tt>is :versioned_dimension</tt> or <tt>is :versioned_collection</tt> depending on what you need.
 
-The method <tt>version!</tt> is available on the fact model, along with <tt>current_dimension</tt> and <tt>current_collection</tt>.
+The method <tt>version!</tt> is available on the fact model, along with <tt>fetch_dimension</tt> and <tt>fetch_collection</tt>.
 
 = Example
 
@@ -45,7 +45,7 @@ So <tt>post</tt> would be our fact table, with <tt>post_detail</tt> as it's dime
       one_to_many :post_details
   
       def body
-        current_post_detail.body
+        fetch_post_detail.body
       end
     end
     

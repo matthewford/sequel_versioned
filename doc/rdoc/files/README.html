@@ -31,7 +31,7 @@
         </div>
         <div class='last-update'>
           Last Update:
-          <span class='datetime'>Mon Oct 27 16:13:43 +0000 2008</span>
+          <span class='datetime'>Mon Oct 27 16:15:29 +0000 2008</span>
         </div>
       </div>
       <div id='content'>
@@ -78,7 +78,7 @@
             <h1>Example</h1>
             <p>
             Say we have a blog posts and comments, all of which need to be versioned.
-            So <tt>post</tt> would be our fact table, with <tt>post_details</tt> as
+            So <tt>post</tt> would be our fact table, with <tt>post_detail</tt> as
             it&#8217;s dimension. Each post would also have a
             <tt>versioned_collection</tt> of comments.
             </p>
@@ -86,8 +86,11 @@
             <p>
             The Post table would have to have the following fields defined:
             <tt>post_detail_id</tt>, <tt>post_detail_version</tt>,
-            <tt>comments_version</tt>. So when a new post is created a corresponding
-            <tt>post_detail</tt> is also created.
+            <tt>comments_version</tt>.
+            </p>
+            <p>
+            So when a new post is created a corresponding <tt>post_detail</tt> is also
+            created.
             </p>
             <p>
             To version the post and the comments, the method <tt>version!</tt> is

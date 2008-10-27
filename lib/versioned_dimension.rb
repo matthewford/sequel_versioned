@@ -12,7 +12,7 @@ module Sequel
       #Included class methods
       module ClassMethods
         # Returns the current version for the accosiation with object or the version specified
-        def current_for(object, fetch_version=nil)
+        def fetch_for(object, fetch_version=nil)
           if fetch_version
             self[self.association_reflection(object.model.name.underscore.to_sym).default_right_key => object.pk, :version => fetch_version]
           else 
@@ -21,7 +21,7 @@ module Sequel
         end
         # duplicate and increment version; update the forigen key and version (number) attributes on object
         def version_for(object)
-         old_obj = self.current_for(object).values
+         old_obj = self.fetch_for(object).values
          old_obj.delete(:id)
          old_version = old_obj.delete(:version)
          o = self.create(old_obj.merge({:version => old_version + 1}))

@@ -25,12 +25,12 @@ module Sequel
         #Instead of using module_eval, you could create an anonymous module to be included in receiver inside apply.
         string = ""
         receiver.dimensions.each do |dimension|
-           method_name = "current_#{dimension.name.underscore}"
-           string<<"def #{method_name};#{dimension}.current_for(self, fetch_version);end;"
+           method_name = "fetch_#{dimension.name.underscore}"
+           string<<"def #{method_name};#{dimension}.fetch_for(self, fetch_version);end;"
         end
         receiver.collections.each do |collection|
-          method_name = "current_#{collection.name.pluralize.underscore}"
-          string<<"def #{method_name};#{collection}.current_for(self, fetch_version);end;"
+          method_name = "fetch_#{collection.name.pluralize.underscore}"
+          string<<"def #{method_name};#{collection}.fetch_for(self, fetch_version);end;"
         end
          receiver.module_eval(string)
       end

@@ -50,6 +50,6 @@ class Fact < Sequel::Model
   one_to_many :dimensions
   
   def name
-    current_dimension.name
+    fetch_dimension.name
   end
 end
