@@ -38,4 +38,11 @@ describe "Sequel Verioned Plugin" do
     @fact.current_collections.size.should == old_version_collections.size
   end
   
+  it "should handle attribute delegation" do
+    d = @fact.current_dimension
+    d.name = "foo"
+    d.save
+    @fact.name.should == "foo"
+  end
+  
 end

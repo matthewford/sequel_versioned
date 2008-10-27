@@ -15,6 +15,7 @@ DB.create_table :dimensions do
   primary_key :id
   integer     :version, :default => 0
   integer :fact_id
+  varchar :name
 end
 
 DB.create_table :collections do
@@ -48,4 +49,8 @@ class Fact < Sequel::Model
   is(:versioned_fact, {:collections => [Collection], :dimensions => [Dimension]})  
   one_to_many :collections
   one_to_many :dimensions
+  
+  def name
+    current_dimension.name
+  end
 end

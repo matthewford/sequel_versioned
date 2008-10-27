@@ -25,7 +25,7 @@ module Sequel
          old_obj.delete(:id)
          old_version = old_obj.delete(:version)
          o = self.create(old_obj.merge({:version => old_version + 1}))
-         object.update({"#{self.name.underscore}_id" => o.id, "#{self.name.underscore}_version" => o.version})
+         object.update({"#{self.name.underscore}_id" => o.pk, "#{self.name.underscore}_version" => o.version})
         end
   
       end # ClassMethods

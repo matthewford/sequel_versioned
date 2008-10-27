@@ -17,7 +17,7 @@ module Sequel
           if fetch_version
             self.filter(key => object.pk, :version => fetch_version)
           else 
-            self.filter(key => object.id, :version => object.send("#{self.name.pluralize.underscore}_version".to_sym))
+            self.filter(key => object.pk, :version => object.send("#{self.name.pluralize.underscore}_version".to_sym))
           end          
         end
         # duplicate and increment version; update the forigen key and version (number) attributes on object
