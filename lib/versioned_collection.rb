@@ -13,7 +13,7 @@ module Sequel
       module ClassMethods
         # Returns the current version for the accosiation with object or the version specified
         def current_for(object, fetch_version=nil)
-          key = self.association_reflection(object.model.name.underscore.to_sym).default_right_key
+          key = self.association_reflection(object.model.name.underscore.to_sym).default_right_key.to_sym
           if fetch_version
             self.filter(key => object.pk, :version => fetch_version)
           else 
