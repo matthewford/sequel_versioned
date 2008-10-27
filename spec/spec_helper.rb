@@ -5,7 +5,6 @@ DB = Sequel.sqlite
 
 DB.create_table :facts do
   primary_key :id
-  varchar :name
   integer :dimension_id
   integer :dimension_version, :default => 0
   integer :collections_version, :default => 0
@@ -29,7 +28,7 @@ class Dimension < Sequel::Model
  set_schema do
    foreign_key :fact_id, :table => :facts
  end
- is :versioned_object
+ is :versioned_dimension
  many_to_one :fact
 end
 

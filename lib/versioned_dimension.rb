@@ -1,14 +1,14 @@
 module Sequel
   module Plugins
-    # is :versioned_object
+    # is :versioned_dimension
     #
     # Assumptions:
     # 
-    # * there is one_to_many with a reciprocated many_to_one between the parent and versioned objects
+    # * there is one_to_many with a reciprocated many_to_one between the parent and versioned dimensions
     # * the parent has an attr, fetch_version, to fetch specific version, otherwise it will get latest version
-    # * the parent has versioned_object_id and versioned_object_version attributes defined
-    # * the versioned_object has parent_id defined
-    module VersionedObject
+    # * the parent has versioned_dimension_id and versioned_dimension_version attributes defined
+    # * the versioned_dimension has parent_id defined
+    module VersionedDimension
       #Included class methods
       module ClassMethods
         # Returns the current version for the accosiation with object or the version specified

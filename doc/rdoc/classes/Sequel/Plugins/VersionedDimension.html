@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang='en'>
   <head>
-    <title>Module: Sequel::Plugins::VersionedObject [Versioning Sequel Plugin]</title>
+    <title>Module: Sequel::Plugins::VersionedDimension [Versioning Sequel Plugin]</title>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
     <link href='../../.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css' />
     <script type='text/javascript'>
@@ -27,11 +27,11 @@
       <div class='header'>
         <h1 class='name'>
           <span class='type'>Module</span>
-          Sequel::Plugins::VersionedObject
+          Sequel::Plugins::VersionedDimension
         </h1>
         <ol class='paths'>
           <li>
-            <a href="../../../files/lib/versioned_object_rb.html">lib/versioned_object.rb</a>
+            <a href="../../../files/lib/versioned_dimension_rb.html">lib/versioned_dimension.rb</a>
           </li>
         </ol>
       </div>
@@ -39,25 +39,25 @@
         <div id='text'>
           <div id='description'>
             <p>
-            is :versioned_object
+            is :versioned_dimension
             </p>
             <p>
             Assumptions:
             </p>
             <ul>
             <li>there is one_to_many with a reciprocated many_to_one between the parent and
-            versioned objects
+            versioned dimensions
             
             </li>
             <li>the parent has an attr, fetch_version, to fetch specific version, otherwise
             it will get latest version
             
             </li>
-            <li>the parent has versioned_object_id and versioned_object_version attributes
-            defined
+            <li>the parent has versioned_dimension_id and versioned_dimension_version
+            attributes defined
             
             </li>
-            <li>the versioned_object has parent_id defined
+            <li>the versioned_dimension has parent_id defined
             
             </li>
             </ul>
@@ -65,7 +65,7 @@
           <div id='section'>
             <div id='class-list'>
               <h3>Classes and Modules</h3>
-              Module <a href="VersionedObject/ClassMethods.html" class="link">Sequel::Plugins::VersionedObject::ClassMethods</a><br />
+              Module <a href="VersionedDimension/ClassMethods.html" class="link">Sequel::Plugins::VersionedDimension::ClassMethods</a><br />
             </div>
           </div>
         </div>
