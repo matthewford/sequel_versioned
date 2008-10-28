@@ -1,1 +1,74 @@
+= Install
 rake install
+
+= Merb
+
+In the before the app loads block add:
+
+	dependency "sequel_versioned", "0.0.1" 
+
+= Sequel Plugin
+
+== Schema
+
+The fact table needs for a versioned dimension both <tt>dimension_id</tt> and <tt>dimension_version</tt> attributes, the versioned dimension must have a <tt>fact_id</tt>.
+
+For a versioned collection the fact table needs <tt>collection_version</tt>, and the collection objects must have a <tt>fact_id</tt>. 
+
+
+== Model
+
+The fact table needs to have a <tt>many_to_one</tt> association with each versioned dimension or collection.
+
+To load the plugin in your Fact model
+	
+	is(:versioned_fact, {:collections => [Collection], :dimensions => [Dimension]})  
+  
+
+Then in your versioned models <tt>is :versioned_dimension</tt> or <tt>is :versioned_collection</tt> depending on what you need.
+
+The method <tt>version!</tt> is available on the fact model, along with <tt>fetch_dimension</tt> and <tt>fetch_collection</tt>.
+
+= Example
+
+Say we have a blog posts and comments, all of which need to be versioned.
+So <tt>post</tt> would be our fact table, with <tt>post_detail</tt> as it's dimension. Each post would also have a <tt>versioned_collection</tt> of comments.
+
+    class Post < Sequel::Model
+      set_schema do
+        foreign_key :post_detail, :table => :post_details
+      end
+      
+      is(:versioned_fact, {:collections => [Comment], :dimensions => [PostDetail]})  
+      
+      one_to_many :comments
+      one_to_many :post_details
+  
+      def body
+        fetch_post_detail.body
+      end
+    end
+    
+The Post table would have to have the following fields defined: <tt>post_detail_id</tt>, <tt>post_detail_version</tt>, <tt>comments_version</tt>.
+
+So when a new post is created a corresponding <tt>post_detail</tt> is also created. 
+
+To version the post and the comments, the method <tt>version!</tt> is provided on instances of the Post class.
+    
+    class PostDetail < Sequel::Model
+     set_schema do
+       foreign_key :post_id, :table => :posts
+     end
+     is :versioned_dimension
+     many_to_one :post
+    end
+
+    class Comments < Sequel::Model
+     set_schema do
+     foreign_key :post_id, :table => :posts
+     end
+     is :versioned_collection
+     many_to_one :post
+    end
+    
+The <tt>comments</tt> and <tt>post_details</tt> table would have <tt>post_id</tt> and <tt>version</tt> defined. 
