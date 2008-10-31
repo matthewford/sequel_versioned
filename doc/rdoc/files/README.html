@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+  <head>
+    <title>File: README [Versioning Sequel Plugin]</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <link href='.././rdoc-style.css' media='screen' rel='stylesheet' type='text/css' />
+    <script type='text/javascript'>
+      //<![CDATA[
+        function popupCode(url) {
+          window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+        }
+        
+        function toggleCode(id) {
+          var code = document.getElementById(id)
+        
+          code.style.display = code.style.display != 'block' ? 'block' : 'none'
+          return true
+        }
+        
+        // Make codeblocks hidden by default
+        document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+      //]]>
+    </script>
+  </head>
+  <body class='page'>
+    <div class='file' id='wrapper'>
+      <div class='header'>
+        <div class='name'>README</div>
+        <div class='paths'>
+          README
+        </div>
+        <div class='last-update'>
+          Last Update:
+          <span class='datetime'>Mon Oct 27 16:37:59 +0000 2008</span>
+        </div>
+      </div>
+      <div id='content'>
+        <div id='text'>
+          <div id='description'>
+            <h1>Install</h1>
+            <p>
+            rake install
+            </p>
+            <h1>Merb</h1>
+            <p>
+            In the before the app loads block add:
+            </p>
+            <pre>&#x000A;        dependency &quot;sequel_versioned&quot;, &quot;0.0.1&quot;</pre>
+            <h1><a href="../classes/Sequel.html">Sequel</a> Plugin</h1>
+            <h2>Schema</h2>
+            <p>
+            The fact table needs for a versioned dimension both <tt>dimension_id</tt>
+            and <tt>dimension_version</tt> attributes, the versioned dimension must
+            have a <tt>fact_id</tt>.
+            </p>
+            <p>
+            For a versioned collection the fact table needs
+            <tt>collection_version</tt>, and the collection objects must have a
+            <tt>fact_id</tt>.
+            </p>
+            <h2>Model</h2>
+            <p>
+            The fact table needs to have a <tt>many_to_one</tt> association with each
+            versioned dimension or collection.
+            </p>
+            <p>
+            To load the plugin in your Fact model
+            </p>
+            <pre>&#x000A;        is(:versioned_fact, {:collections =&gt; [Collection], :dimensions =&gt; [Dimension]})</pre>
+            <p>
+            Then in your versioned models <tt>is :versioned_dimension</tt> or <tt>is
+            :versioned_collection</tt> depending on what you need.
+            </p>
+            <p>
+            The method <tt>version!</tt> is available on the fact model, along with
+            <tt>fetch_dimension</tt> and <tt>fetch_collection</tt>.
+            </p>
+            <h1>Example</h1>
+            <p>
+            Say we have a blog posts and comments, all of which need to be versioned.
+            So <tt>post</tt> would be our fact table, with <tt>post_detail</tt> as
+            it&#8217;s dimension. Each post would also have a
+            <tt>versioned_collection</tt> of comments.
+            </p>
+            <pre>&#x000A;    class Post &lt; Sequel::Model&#x000A;      set_schema do&#x000A;        foreign_key :post_detail, :table =&gt; :post_details&#x000A;      end&#x000A;&#x000A;      is(:versioned_fact, {:collections =&gt; [Comment], :dimensions =&gt; [PostDetail]})&#x000A;&#x000A;      one_to_many :comments&#x000A;      one_to_many :post_details&#x000A;&#x000A;      def body&#x000A;        fetch_post_detail.body&#x000A;      end&#x000A;    end</pre>
+            <p>
+            The Post table would have to have the following fields defined:
+            <tt>post_detail_id</tt>, <tt>post_detail_version</tt>,
+            <tt>comments_version</tt>.
+            </p>
+            <p>
+            So when a new post is created a corresponding <tt>post_detail</tt> is also
+            created.
+            </p>
+            <p>
+            To version the post and the comments, the method <tt>version!</tt> is
+            provided on instances of the Post class.
+            </p>
+            <pre>&#x000A;    class PostDetail &lt; Sequel::Model&#x000A;     set_schema do&#x000A;       foreign_key :post_id, :table =&gt; :posts&#x000A;     end&#x000A;     is :versioned_dimension&#x000A;     many_to_one :post&#x000A;    end&#x000A;&#x000A;    class Comments &lt; Sequel::Model&#x000A;     set_schema do&#x000A;     foreign_key :post_id, :table =&gt; :posts&#x000A;     end&#x000A;     is :versioned_collection&#x000A;     many_to_one :post&#x000A;    end</pre>
+            <p>
+            The <tt>comments</tt> and <tt>post_details</tt> table would have
+            <tt>post_id</tt> and <tt>version</tt> defined.
+            </p>
+          </div>
+          <div id='section'>
+          </div>
+        </div>
+      </div>
+      <div id='footer-push'></div>
+    </div>
+    <div id='footer'>
+      <a href="http://github.com/mislav/hanna"><strong>Hanna</strong> RDoc template</a>
+      hand-crafted by
+      <strong><a href="http://mislav.caboo.se/">Mislav</a></strong>
+    </div>
+  </body>
+</html>

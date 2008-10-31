@@ -52,7 +52,6 @@ module Sequel
         end
         
         def version!
-          self.fetch_version = nil #incase it was set
           version_dimensions!
           version_collections!
         end

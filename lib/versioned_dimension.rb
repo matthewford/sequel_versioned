@@ -21,7 +21,7 @@ module Sequel
         end
         # duplicate and increment version; update the forigen key and version (number) attributes on object
         def version_for(object)
-         old_obj = self.fetch_for(object).values
+         old_obj = self[object.send("#{self.name.underscore}_id".to_sym)].values
          old_obj.delete(:id)
          old_version = old_obj.delete(:version)
          o = self.create(old_obj.merge({:version => old_version + 1}))

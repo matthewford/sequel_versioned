@@ -38,6 +38,11 @@ describe "Sequel Verioned Plugin" do
     @fact.fetch_collections.size.should == old_version_collections.size
   end
   
+  it "should save the correct version number on dimensions" do
+    @fact.version!
+    @fact.dimension_version.should == @fact.fetch_dimension.version
+  end
+  
   it "should handle attribute delegation" do
     d = @fact.fetch_dimension
     d.name = "foo"

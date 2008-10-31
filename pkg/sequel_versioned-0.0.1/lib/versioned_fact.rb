@@ -24,13 +24,17 @@ module Sequel
         #dynamic methods, current_dimension and current_collections
         #Instead of using module_eval, you could create an anonymous module to be included in receiver inside apply.
         string = ""
-        receiver.dimensions.each do |dimension|
-           method_name = "fetch_#{dimension.name.underscore}"
-           string<<"def #{method_name};#{dimension}.fetch_for(self, fetch_version);end;"
+        unless receiver.dimensions.nil?
+          receiver.dimensions.each do |dimension|
+             method_name = "fetch_#{dimension.name.underscore}"
+             string<<"def #{method_name};#{dimension}.fetch_for(self, fetch_version);end;"
+          end
         end
-        receiver.collections.each do |collection|
-          method_name = "fetch_#{collection.name.pluralize.underscore}"
-          string<<"def #{method_name};#{collection}.fetch_for(self, fetch_version);end;"
+        unless receiver.collections.nil?          
+          receiver.collections.each do |collection|
+            method_name = "fetch_#{collection.name.pluralize.underscore}"
+            string<<"def #{method_name};#{collection}.fetch_for(self, fetch_version);end;"
+          end
         end
          receiver.module_eval(string)
       end
@@ -48,7 +52,6 @@ module Sequel
         end
         
         def version!
-          self.fetch_version = nil #incase it was set
           version_dimensions!
           version_collections!
         end

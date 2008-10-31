@@ -22,19 +22,18 @@ module Sequel
         end
         # duplicate and increment version; update the forigen key and version (number) attributes on object
         def version_for(object)
-          old_objs = self.fetch_for(object).all
-          unless old_objs.empty?
+          key = self.association_reflection(object.model.name.underscore.to_sym).default_right_key.to_sym
+          old_objs = self.filter(key => object.pk, :version => object.send("#{self.name.pluralize.underscore}_version".to_sym)).all
           old_version_sym = "#{self.name.pluralize.underscore}_version".to_sym
           old_version = object.send(old_version_sym)
-
+          unless old_objs.empty?
             old_objs.each do |o|
               o_values = o.values
               o_values.delete(:id)
               new_object = self.create(o_values.merge(:version => old_version + 1))
-            end
-          
-            object.update({old_version_sym => old_version + 1 })
+            end          
           end
+          object.update({old_version_sym => old_version + 1 })
         end
       end # ClassMethods
     end #Versioned
