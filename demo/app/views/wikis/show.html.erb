@@ -1,0 +1,9 @@
+<h1>Wiki: <%= @wiki.name %></h1>
+
+<h2>Pages</h2>
+<% @wiki.pages.each do |page| %>
+  <li><%= link_to page.fetch_page_detail.title, url(:wiki_page, @wiki, page) %></li>
+<% end %>
+
+<p><%= link_to "Create page", url(:new_wiki_page, @wiki) %></p>
+<p><%= link_to "All Wiki's", url(:wikis) %></p>

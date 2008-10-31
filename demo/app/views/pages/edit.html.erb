@@ -1,0 +1,12 @@
+<h1>Edit Page</h1>
+
+<%= form_for @page.fetch_page_detail, :action => url(:wiki_page, @wiki, @page) do %>
+
+<p><%= text_field :title, :label => "Title" %></p>
+<p><%= text_area :body %></p>
+
+<p><%= check_box :name => :version_page, :label => "new version", :value => 1 %></p>
+
+<%= submit "Edit" %>
+
+<% end =%>

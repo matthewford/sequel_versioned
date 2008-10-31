@@ -1,0 +1,30 @@
+<p><%= link_to "back", url(:wiki, @wiki) %></p>
+<p><%= link_to "Edit", url(:edit_wiki_page, @wiki, @page) %></p>
+
+<h1><%= @page_detail.title %> (<%= @page_detail.version %>)</h1>
+
+<%= @page_detail.body_html %>
+
+<% unless @page.page_detail_version == 0 %>
+<h3>Older Versions</h3>
+<p>
+<% (@page.page_detail_version).downto(0) do |n| %>
+  <%= link_to "#{n}", url(:wiki_page, @wiki, @page)+"?version=#{n}" %> <%= "," unless n == 0 %>
+<% end %>
+</p>
+<% end %>
+
+<h3>Comments</h3>
+
+<ol>
+  <% @comments.each do |c| %>
+  <hr />
+  <%= c.body_html %>
+  <% end %>
+</ol>
+
+<%= form_for @comment, :action => url(:wiki_page_comments, @wiki, @page, @comment) do %>
+<%= text_area :body, :label => "Comment" %>
+<%= hidden_field :version %>
+<%= submit "Add Comment" %>
+<% end =%>

@@ -1,0 +1,10 @@
+<h1>New Page</h1>
+
+<%= form_for @page.fetch_page_detail, :action => url(:wiki_page, @wiki, @page) do %>
+
+<p><%= text_field :title, :label => "Title" %></p>
+<p><%= text_area :body  %></p>
+
+<%= submit "Create" %>
+
+<% end =%>

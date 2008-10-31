@@ -1,0 +1,11 @@
+<h1>Wiki's</h1>
+<% unless @wikis.empty? %>
+<ul>
+  <% @wikis.each do |w| %>
+  <li><%= link_to w.name, resource(w) %></li>
+  <% end %>
+</ul>
+<% else %>
+<p>No wiki's created</p>
+<% end %>
+<p><%= link_to "Create a wiki", resource(:wikis, :new) %></p>

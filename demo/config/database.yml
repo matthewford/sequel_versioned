@@ -1,0 +1,8 @@
+---
+development: &defaults
+  # These are the settings for repository :default
+  adapter:  sqlite
+  database: vwiki.db
+
+rake:
+  <<: *defaults
