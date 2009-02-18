@@ -5,6 +5,7 @@ DB = Sequel.sqlite
 
 DB.create_table :facts do
   primary_key :id
+  integer :lastest_version, :default => 0
   integer :dimension_id
   integer :dimension_version, :default => 0
   integer :collections_version, :default => 0
@@ -52,4 +53,9 @@ class Fact < Sequel::Model
   def name
     fetch_dimension.name
   end
+  
+  def name=(s)
+    fetch_dimension.name = s
+  end
+  
 end

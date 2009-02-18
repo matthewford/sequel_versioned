@@ -50,4 +50,27 @@ describe "Sequel Verioned Plugin" do
     @fact.name.should == "foo"
   end
   
+  it "should be able to update a older version of dimenions and not effect current one" do
+    @fact = Fact.create
+    d = @fact.fetch_dimension
+    d.name = "editing old"
+    d.save
+    @fact.version!
+    #v1
+    d = @fact.fetch_dimension
+    d.name = "editing old again"
+    d.save
+    @fact.version!
+    #v2
+    
+    @fact.fetch_version = 0
+    d = @fact.fetch_dimension
+    d.name = "editing back in time"
+    d.save
+    @fact.fetch_dimension.name.should == "editing back in time"
+    
+    @fact.latest
+    @fact.fetch_dimension.name.should == "editing old again"
+  end
+  
 end

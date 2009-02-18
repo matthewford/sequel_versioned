@@ -51,7 +51,12 @@ module Sequel
           end
         end
         
+        def latest
+          self.fetch_version = self.lastest_version
+        end
+        
         def version!
+          self.lastest_version = self.lastest_version + 1
           version_dimensions!
           version_collections!
         end

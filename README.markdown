@@ -10,6 +10,7 @@ In the before the app loads block add:
 # Sequel Plugin
 
 ## Schema
+Fact table needs to have the attribute lastest_version
 
 The fact table needs for a versioned dimension both `dimension_id` and `dimension_version` attributes, the versioned dimension must have a `fact_id`.
 

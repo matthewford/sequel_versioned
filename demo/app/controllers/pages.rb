@@ -32,7 +32,9 @@ class Pages < Application
   # GET /pages/:id/edit
   def edit
     only_provides :html
+    version = params[:version]    
     @page = Page[params[:id]]
+    @page.fetch_version = version if version
     raise NotFound unless @page
     render
   end

@@ -553,7 +553,7 @@ span.run100 {
 </style>
     </head>
   <body><h3>C0 code coverage information</h3>
-    <p>Generated on Fri Oct 31 15:06:29 +0000 2008 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.3</a>
+    <p>Generated on Wed Feb 18 16:49:27 +0000 2009 with <a href='http://eigenclass.org/hiki/rcov'>rcov 0.8.1.3</a>
       </p>
     <hr/>
     <pre><span class='marked0'>Code reported as executed by Ruby looks like this...
@@ -571,24 +571,24 @@ span.run100 {
     </thead>
   <tbody><tr class='light'><td><a href='spec-spec_helper_rb.html'>spec/spec_helper.rb</a>
         </td>
-      <td class='lines_total'><tt>55</tt>
+      <td class='lines_total'><tt>61</tt>
         </td>
-      <td class='lines_code'><tt>44</tt>
+      <td class='lines_code'><tt>48</tt>
         </td>
-      <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_total'>100.0%</tt>
+      <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_total'>93.4%</tt>
               &nbsp;</td>
-            <td><table class='percent_graph' cellspacing='0' cellpadding='0' width='100'><tr><td class='covered' width='100'/>
-                  <td class='uncovered' width='0'/>
+            <td><table class='percent_graph' cellspacing='0' cellpadding='0' width='100'><tr><td class='covered' width='93'/>
+                  <td class='uncovered' width='7'/>
                   </tr>
                 </table>
               </td>
             </tr>
           </table>
         </td>
-      <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_code'>100.0%</tt>
+      <td><table cellspacing='0' align='right' cellpadding='0'><tr><td><tt class='coverage_code'>93.8%</tt>
               &nbsp;</td>
-            <td><table class='percent_graph' cellspacing='0' cellpadding='0' width='100'><tr><td class='covered' width='100'/>
-                  <td class='uncovered' width='0'/>
+            <td><table class='percent_graph' cellspacing='0' cellpadding='0' width='100'><tr><td class='covered' width='94'/>
+                  <td class='uncovered' width='6'/>
                   </tr>
                 </table>
               </td>
@@ -598,61 +598,67 @@ span.run100 {
       </tr>
     </tbody>
   </table>
-<pre><span class="marked0"><a name="line1"></a> 1 require File.join(File.dirname(__FILE__), &quot;../lib/sequel_versioned&quot;)
-</span><span class="inferred1"><a name="line2"></a> 2 
-</span><span class="inferred0"><a name="line3"></a> 3 
-</span><span class="marked1"><a name="line4"></a> 4 DB = Sequel.sqlite
-</span><span class="inferred0"><a name="line5"></a> 5 
-</span><span class="marked1"><a name="line6"></a> 6 DB.create_table :facts do
-</span><span class="marked0"><a name="line7"></a> 7   primary_key :id
-</span><span class="marked1"><a name="line8"></a> 8   integer :dimension_id
-</span><span class="marked0"><a name="line9"></a> 9   integer :dimension_version, :default =&gt; 0
-</span><span class="marked1"><a name="line10"></a>10   integer :collections_version, :default =&gt; 0
-</span><span class="inferred0"><a name="line11"></a>11 end
-</span><span class="inferred1"><a name="line12"></a>12 
-</span><span class="marked0"><a name="line13"></a>13 DB.create_table :dimensions do
-</span><span class="marked1"><a name="line14"></a>14   primary_key :id
-</span><span class="marked0"><a name="line15"></a>15   integer     :version, :default =&gt; 0
-</span><span class="marked1"><a name="line16"></a>16   integer :fact_id
-</span><span class="marked0"><a name="line17"></a>17   varchar :name
-</span><span class="inferred1"><a name="line18"></a>18 end
-</span><span class="inferred0"><a name="line19"></a>19 
-</span><span class="marked1"><a name="line20"></a>20 DB.create_table :collections do
-</span><span class="marked0"><a name="line21"></a>21   primary_key :id
-</span><span class="marked1"><a name="line22"></a>22   integer     :version, :default =&gt; 0
-</span><span class="marked0"><a name="line23"></a>23   integer :fact_id
-</span><span class="inferred1"><a name="line24"></a>24 end
-</span><span class="inferred0"><a name="line25"></a>25 
-</span><span class="inferred1"><a name="line26"></a>26 
-</span><span class="marked0"><a name="line27"></a>27 class Dimension &lt; Sequel::Model
-</span><span class="marked1"><a name="line28"></a>28  set_schema do
-</span><span class="marked0"><a name="line29"></a>29    foreign_key :fact_id, :table =&gt; :facts
-</span><span class="inferred1"><a name="line30"></a>30  end
-</span><span class="marked0"><a name="line31"></a>31  is :versioned_dimension
-</span><span class="marked1"><a name="line32"></a>32  many_to_one :fact
-</span><span class="inferred0"><a name="line33"></a>33 end
-</span><span class="inferred1"><a name="line34"></a>34 
-</span><span class="marked0"><a name="line35"></a>35 class Collection &lt; Sequel::Model
-</span><span class="marked1"><a name="line36"></a>36  set_schema do
-</span><span class="marked0"><a name="line37"></a>37    foreign_key :fact_id, :table =&gt; :facts
-</span><span class="inferred1"><a name="line38"></a>38  end
-</span><span class="marked0"><a name="line39"></a>39  is :versioned_collection
-</span><span class="marked1"><a name="line40"></a>40  many_to_one :fact
-</span><span class="inferred0"><a name="line41"></a>41 end
-</span><span class="inferred1"><a name="line42"></a>42 
-</span><span class="inferred0"><a name="line43"></a>43 
-</span><span class="marked1"><a name="line44"></a>44 class Fact &lt; Sequel::Model
-</span><span class="marked0"><a name="line45"></a>45   set_schema do
-</span><span class="marked1"><a name="line46"></a>46     foreign_key :dimension_id, :table =&gt; :dimensions
-</span><span class="inferred0"><a name="line47"></a>47   end
-</span><span class="marked1"><a name="line48"></a>48   is(:versioned_fact, {:collections =&gt; [Collection], :dimensions =&gt; [Dimension]})  
-</span><span class="marked0"><a name="line49"></a>49   one_to_many :collections
-</span><span class="marked1"><a name="line50"></a>50   one_to_many :dimensions
-</span><span class="inferred0"><a name="line51"></a>51   
-</span><span class="marked1"><a name="line52"></a>52   def name
-</span><span class="marked0"><a name="line53"></a>53     fetch_dimension.name
-</span><span class="inferred1"><a name="line54"></a>54   end
-</span><span class="inferred0"><a name="line55"></a>55 end
+<pre><span class="marked1"><a name="line1"></a> 1 require File.join(File.dirname(__FILE__), &quot;../lib/sequel_versioned&quot;)
+</span><span class="inferred0"><a name="line2"></a> 2 
+</span><span class="inferred1"><a name="line3"></a> 3 
+</span><span class="marked0"><a name="line4"></a> 4 DB = Sequel.sqlite
+</span><span class="inferred1"><a name="line5"></a> 5 
+</span><span class="marked0"><a name="line6"></a> 6 DB.create_table :facts do
+</span><span class="marked1"><a name="line7"></a> 7   primary_key :id
+</span><span class="marked0"><a name="line8"></a> 8   integer :lastest_version, :default =&gt; 0
+</span><span class="marked1"><a name="line9"></a> 9   integer :dimension_id
+</span><span class="marked0"><a name="line10"></a>10   integer :dimension_version, :default =&gt; 0
+</span><span class="marked1"><a name="line11"></a>11   integer :collections_version, :default =&gt; 0
+</span><span class="inferred0"><a name="line12"></a>12 end
+</span><span class="inferred1"><a name="line13"></a>13 
+</span><span class="marked0"><a name="line14"></a>14 DB.create_table :dimensions do
+</span><span class="marked1"><a name="line15"></a>15   primary_key :id
+</span><span class="marked0"><a name="line16"></a>16   integer     :version, :default =&gt; 0
+</span><span class="marked1"><a name="line17"></a>17   integer :fact_id
+</span><span class="marked0"><a name="line18"></a>18   varchar :name
+</span><span class="inferred1"><a name="line19"></a>19 end
+</span><span class="inferred0"><a name="line20"></a>20 
+</span><span class="marked1"><a name="line21"></a>21 DB.create_table :collections do
+</span><span class="marked0"><a name="line22"></a>22   primary_key :id
+</span><span class="marked1"><a name="line23"></a>23   integer     :version, :default =&gt; 0
+</span><span class="marked0"><a name="line24"></a>24   integer :fact_id
+</span><span class="inferred1"><a name="line25"></a>25 end
+</span><span class="inferred0"><a name="line26"></a>26 
+</span><span class="inferred1"><a name="line27"></a>27 
+</span><span class="marked0"><a name="line28"></a>28 class Dimension &lt; Sequel::Model
+</span><span class="marked1"><a name="line29"></a>29  set_schema do
+</span><span class="marked0"><a name="line30"></a>30    foreign_key :fact_id, :table =&gt; :facts
+</span><span class="inferred1"><a name="line31"></a>31  end
+</span><span class="marked0"><a name="line32"></a>32  is :versioned_dimension
+</span><span class="marked1"><a name="line33"></a>33  many_to_one :fact
+</span><span class="inferred0"><a name="line34"></a>34 end
+</span><span class="inferred1"><a name="line35"></a>35 
+</span><span class="marked0"><a name="line36"></a>36 class Collection &lt; Sequel::Model
+</span><span class="marked1"><a name="line37"></a>37  set_schema do
+</span><span class="marked0"><a name="line38"></a>38    foreign_key :fact_id, :table =&gt; :facts
+</span><span class="inferred1"><a name="line39"></a>39  end
+</span><span class="marked0"><a name="line40"></a>40  is :versioned_collection
+</span><span class="marked1"><a name="line41"></a>41  many_to_one :fact
+</span><span class="inferred0"><a name="line42"></a>42 end
+</span><span class="inferred1"><a name="line43"></a>43 
+</span><span class="inferred0"><a name="line44"></a>44 
+</span><span class="marked1"><a name="line45"></a>45 class Fact &lt; Sequel::Model
+</span><span class="marked0"><a name="line46"></a>46   set_schema do
+</span><span class="marked1"><a name="line47"></a>47     foreign_key :dimension_id, :table =&gt; :dimensions
+</span><span class="inferred0"><a name="line48"></a>48   end
+</span><span class="marked1"><a name="line49"></a>49   is(:versioned_fact, {:collections =&gt; [Collection], :dimensions =&gt; [Dimension]})  
+</span><span class="marked0"><a name="line50"></a>50   one_to_many :collections
+</span><span class="marked1"><a name="line51"></a>51   one_to_many :dimensions
+</span><span class="inferred0"><a name="line52"></a>52   
+</span><span class="marked1"><a name="line53"></a>53   def name
+</span><span class="marked0"><a name="line54"></a>54     fetch_dimension.name
+</span><span class="inferred1"><a name="line55"></a>55   end
+</span><span class="inferred0"><a name="line56"></a>56   
+</span><span class="marked1"><a name="line57"></a>57   def name=(s)
+</span><span class="uncovered0"><a name="line58"></a>58     fetch_dimension.name = s
+</span><span class="uncovered1"><a name="line59"></a>59   end
+</span><span class="uncovered0"><a name="line60"></a>60   
+</span><span class="uncovered1"><a name="line61"></a>61 end
 </span></pre><hr/>
     <p>Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'>rcov code coverage analysis tool for Ruby</a>
    version 0.8.1.3.</p>

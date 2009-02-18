@@ -23,9 +23,9 @@ module Sequel
         # duplicate and increment version; update the forigen key and version (number) attributes on object
         def version_for(object)
           key = self.association_reflection(object.model.name.underscore.to_sym).default_right_key.to_sym
-          old_objs = self.filter(key => object.pk, :version => object.send("#{self.name.pluralize.underscore}_version".to_sym)).all
           old_version_sym = "#{self.name.pluralize.underscore}_version".to_sym
           old_version = object.send(old_version_sym)
+          old_objs = self.filter(key => object.pk, :version => object.send(old_version_sym)).all
           unless old_objs.empty?
             old_objs.each do |o|
               o_values = o.values

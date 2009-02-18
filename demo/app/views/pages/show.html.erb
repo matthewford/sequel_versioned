@@ -1,5 +1,5 @@
 <p><%= link_to "back", url(:wiki, @wiki) %></p>
-<p><%= link_to "Edit", url(:edit_wiki_page, @wiki, @page) %></p>
+<p><%= link_to "Edit", url(:edit_wiki_page, @wiki, @page)+"?version=#{@page_detail.version}" %></p>
 
 <h1><%= @page_detail.title %> (<%= @page_detail.version %>)</h1>
 
